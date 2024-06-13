@@ -10,7 +10,7 @@ class StoryService {
     public function insert($request) {
         try {
             $title = $request->input('title');
-            $slug = convert_vi_to_en($title);
+            $slug = UrlNormal($title);
             Story::create([
                 'title' => $title,
                 'description' => $request->input('description'),
@@ -35,7 +35,7 @@ class StoryService {
     public function update($request, $id) {
         try {
             $title = $request->input('title');
-            $slug = convert_vi_to_en($title);
+            $slug = UrlNormal($title);
             $id->fill([
                 'title' => $title,
                 'description' => $request->input('description'),
@@ -68,6 +68,10 @@ class StoryService {
     }
 
     public function getStory($slug) {
-        return Story::join('genres', 'genres.id', '=', 'stories.genre_id')->orderBy('stories.id', 'asc')->where('genres.slug', $slug)->get();
+        return Story::join('genres', 'genres.id', '=', 'stories.genre_id')->select('stories.*')->orderBy('stories.id', 'asc')->where('genres.slug', $slug)->get();
+    }
+
+    public function makeAllFromSlug($slug) {
+        return Story::join('users', 'users.id','=', 'stories.user_id')->join('genres', 'genres.id', '=', 'stories.genre_id')->join('chapters', 'chapters.story_id', '=', 'stories.id')->select('stories.id', 'stories.title', 'stories.description', 'stories.cover_image', 'users.name as username', 'genres.name', 'chapters.slug', 'chapters.id as chapter_id')->where('stories.slug', $slug)->first();
     }
 }

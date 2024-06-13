@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 class GenreService {
     public function insert($request) {
         $name = $request->input('name');
-        $slug = convert_vi_to_en($name);
+        $slug = UrlNormal($name);
         try {
             Genre::create([
                 'name' => $name,
@@ -30,7 +30,7 @@ class GenreService {
 
     public function update($request, $id) {
         $name = $request->input('name');
-        $slug = convert_vi_to_en($name);
+        $slug = UrlNormal($name);
         try {
             $id->fill([
                 'name' => $name,

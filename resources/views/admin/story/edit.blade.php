@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="name" class="form-label ml-3">Mô tả về truyện</label>
-                                    <input type="text" class="form-control form-control-user" name="description" placeholder="Nhập mô tả về truyện" value="{{ $value->description }}">
+                                    <textarea class="form-control" id="content" name="description" rows="3" required placeholder="Nhập mô tả về truyện">{{ $value->description }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="name" class="form-label ml-3">Tên thể loại</label>

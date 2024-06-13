@@ -23,6 +23,21 @@
     padding-right: 210px !important;
 }
 
+.text-black {
+    color: black !important;
+}
+
+.chapter_title {
+    color: inherit !important;
+    text-decoration: none !important;
+    font-weight: normal !important;
+}
+
+.chapter_title:hover {
+    color: #ccc;
+    text-decoration: none !important;
+}
+
 .table-fixed {
     width: 100%;
     table-layout: fixed;

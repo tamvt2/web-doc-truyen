@@ -11,9 +11,7 @@ class Comment extends Model
 
     protected $fillable = [
         'user_id',
-        'chapter_id',
+        'story_id',
         'content'
     ];
-
-    public $timestamps = false;
 }

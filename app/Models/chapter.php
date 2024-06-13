@@ -13,7 +13,8 @@ class Chapter extends Model
         'story_id',
         'title',
         'content',
-        'chapter_number'
+        'chapter_number',
+        'slug'
     ];
 
     public $timestamps = false;

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StoryController;
@@ -22,7 +23,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('the-loai/{slug}', [HomeController::class, 'show']);
 Route::get('tim-kiem', [HomeController::class, 'search']);
+Route::get('truyen/{slug}', [HomeController::class, 'story']);
+Route::get('doc-truyen/{url}', [HomeController::class, 'chapter']);
 
+Route::middleware(['auth'])->group(function() {
+    Route::prefix('/')->group(function() {
+        Route::post('add', [CommentController::class, 'store']);
+    });
+});
 
 Route::get('login', [UserController::class, 'index'])->name('login');
 Route::get('register', [UserController::class, 'show'])->name('register');
@@ -63,6 +71,10 @@ Route::middleware(['auth'])->group(function() {
             Route::get('edit/{id}', [ChapterController::class, 'show']);
             Route::post('edit/{id}', [ChapterController::class, 'update']);
             Route::delete('destroy', [ChapterController::class, 'destroy']);
+        });
+
+        Route::prefix('comment')->group(function() {
+            Route::get('list', [CommentController::class, 'index']);
         });
     });
 });
