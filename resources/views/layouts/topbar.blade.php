@@ -48,8 +48,8 @@
                 </a>
             @else
                 <div class="mx-5">
-                    <a href="login">Login</a> |
-                    <a href="register">Register</a>
+                    <a href="{{ url('login') }}">Login</a> |
+                    <a href="{{ url('register') }}">Register</a>
                 </div>
             @endif
             <!-- Dropdown - User Information -->

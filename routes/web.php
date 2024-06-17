@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
@@ -25,10 +27,15 @@ Route::get('the-loai/{slug}', [HomeController::class, 'show']);
 Route::get('tim-kiem', [HomeController::class, 'search']);
 Route::get('truyen/{slug}', [HomeController::class, 'story']);
 Route::get('doc-truyen/{url}', [HomeController::class, 'chapter']);
+Route::get('/get-rating/{story}', [RatingController::class, 'show']);
+Route::get('favorite-count/{id}', [FavoriteController::class, 'count']);
+Route::get('favorite', [FavoriteController::class, 'favorite']);
 
 Route::middleware(['auth'])->group(function() {
     Route::prefix('/')->group(function() {
         Route::post('add', [CommentController::class, 'store']);
+        Route::post('rate-story', [RatingController::class, 'store']);
+        Route::post('/toggle-favorite/{storyId}', [FavoriteController::class, 'toggleFavorite'])->name('toggle-favorite');
     });
 });
 
@@ -75,6 +82,10 @@ Route::middleware(['auth'])->group(function() {
 
         Route::prefix('comment')->group(function() {
             Route::get('list', [CommentController::class, 'index']);
+        });
+
+        Route::prefix('rating')->group(function() {
+            Route::get('list', [RatingController::class, 'index']);
         });
     });
 });

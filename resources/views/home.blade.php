@@ -37,7 +37,38 @@
                                                 <i class="fa fa-tags"></i> Thể loại: {{ $story->name }}
                                             </small>
                                         </h6>
+                                        <h6 class="card-text">
+                                            <small class="text-muted">
+                                                <i class="fas fa-heart"></i>
+                                                <span class="favoriteCount fs-4" data-story-id="{{ $story->id }}">0</span> yêu thích
+                                            </small>
+                                        </h6>
                                         <p class="card-text">{{ $story->description }}</p>
+                                        @if (auth()->check())
+                                            <button class="btn btn-primary toggle-favorite" data-story-id="{{ $story->id }}" data-liked="false">
+                                                <i class="fas fa-heart"></i> <span class="favorite-text">Thích</span>
+                                            </button>
+                                        @else
+                                            <button class="btn btn-primary toggle-favorite">
+                                                <i class="fas fa-heart"></i> <span class="favorite-text">Thích</span>
+                                            </button>
+                                        @endif
+                                        <div class="star-rating">
+                                            <form action="">
+                                                @csrf
+                                                <input type="hidden" id="story_id" value="{{ $story->id }}">
+                                                <input type="radio" name="rate" id="rate-5" value="5">
+                                                <label for="rate-5" class="fas fa-star"></label>
+                                                <input type="radio" name="rate" id="rate-4" value="4">
+                                                <label for="rate-4" class="fas fa-star"></label>
+                                                <input type="radio" name="rate" id="rate-3" value="3">
+                                                <label for="rate-3" class="fas fa-star"></label>
+                                                <input type="radio" name="rate" id="rate-2" value="2">
+                                                <label for="rate-2" class="fas fa-star"></label>
+                                                <input type="radio" name="rate" id="rate-1" value="1">
+                                                <label for="rate-1" class="fas fa-star"></label>
+                                            </form>
+                                        </div>
                                         <div class="mt-auto text-center">
                                             <a href="{{ url('doc-truyen/' . $story->slug.'-'.$story->chapter_id) }}" class="btn btn-primary">Đọc truyện</a>
                                         </div>
@@ -74,7 +105,7 @@
                         <div class="form-group">
                             <label for="content">Comment:</label>
                             <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
-                            <input type="hidden" name="story_id" value="{{ $id }}">
+                            <input type="hidden" name="story_id" value="{{ $story->id }}">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

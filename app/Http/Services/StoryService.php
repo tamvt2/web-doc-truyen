@@ -72,6 +72,6 @@ class StoryService {
     }
 
     public function makeAllFromSlug($slug) {
-        return Story::join('users', 'users.id','=', 'stories.user_id')->join('genres', 'genres.id', '=', 'stories.genre_id')->join('chapters', 'chapters.story_id', '=', 'stories.id')->select('stories.id', 'stories.title', 'stories.description', 'stories.cover_image', 'users.name as username', 'genres.name', 'chapters.slug', 'chapters.id as chapter_id')->where('stories.slug', $slug)->first();
+        return Story::join('users', 'users.id','=', 'stories.user_id')->join('genres', 'genres.id', '=', 'stories.genre_id')->leftJoin('chapters', 'chapters.story_id', '=', 'stories.id')->select('stories.id', 'stories.title', 'stories.description', 'stories.cover_image', 'users.name as username', 'genres.name', 'chapters.slug', 'chapters.id as chapter_id')->where('stories.slug', $slug)->first();
     }
 }
